@@ -1,0 +1,16 @@
+services:
+  go-http-app:
+    container_name: go-http-app01
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      HTTP_HOST: ${HTTP_HOST}
+      HTTP_PORT: ${HTTP_PORT}
+      DB_DRIVER: ${DB_DRIVER}
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+      JWT_SECRET: ${JWT_SECRET}
+    env_file:
+      - .env
+    volumes:
+      - ./sqlite.db:/app/sqlite.db

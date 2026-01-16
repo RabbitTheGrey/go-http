@@ -18,3 +18,6 @@ sudo docker exec -it go-http-app01 migrate
 sudo docker exec -it go-http-app01 admin-cli
 ```
 7. Сервис доступен на localhost(или ваш ip):8080(или другой порт из .env)
+
+По обратной связи пишите, пожалуйста, в телеграм @rabbitthegrey
+Это поможет будущим проектам стать еще лучше

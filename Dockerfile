@@ -22,4 +22,5 @@ WORKDIR /app
 COPY --from=builder /app/server .
 COPY --from=builder /app/admin-cli .
 COPY --from=builder /app/migrate .
+
 CMD ["./server"]

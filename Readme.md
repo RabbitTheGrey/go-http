@@ -11,11 +11,11 @@ sudo docker compose build && sudo docker compose up -d
 4. для пересборки использовать `./cmd/sh/rebuild.sh`
 5. выполнить миграции 
 ```
-sudo docker exec -it go-http-app01 migrate
+sudo docker exec -it go-http-app01 ./migrate
 ```
 6. Создать пользователя через админ панель
 ```
-sudo docker exec -it go-http-app01 admin-cli
+sudo docker exec -it go-http-app01 ./admin-cli
 ```
 7. Сервис доступен на localhost(или ваш ip):8080(или другой порт из .env)
 

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"go-web/internal"
 	"go-web/internal/dto"
+	"go-web/internal/entity"
 	"go-web/internal/service"
-	"go-web/pkg/security"
 	"net/http"
 	"strconv"
 )
@@ -22,10 +22,13 @@ import (
 //   - PostDTO
 func Update(w http.ResponseWriter, r *http.Request) {
 	var body dto.PostRequest
+	var user entity.User
 
-	user, err := security.CurrentUser(r)
-	if err != nil {
-		internal.JsonResponse("Forbidden", http.StatusForbidden, w)
+	ctxUser := r.Context().Value("user")
+	user, ok := ctxUser.(entity.User)
+
+	if !ok {
+		http.Error(w, "Invalid user type in context", http.StatusInternalServerError)
 		return
 	}
 

@@ -11,6 +11,10 @@ func (e *Error) Error() string {
 	return e.Message
 }
 
+func ErrUnauthorized(msg string) *Error {
+	return &Error{Message: msg, Code: http.StatusUnauthorized}
+}
+
 func ErrNotFound(msg string) *Error {
 	return &Error{Message: msg, Code: http.StatusNotFound}
 }

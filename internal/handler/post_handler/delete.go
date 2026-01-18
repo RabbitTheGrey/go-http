@@ -2,8 +2,8 @@ package post_handler
 
 import (
 	"go-web/internal"
+	"go-web/internal/entity"
 	"go-web/internal/service"
-	"go-web/pkg/security"
 	"net/http"
 	"strconv"
 )
@@ -16,16 +16,20 @@ import (
 // Возвращает:
 //   - bool статус удаления
 func Delete(w http.ResponseWriter, r *http.Request) {
+	var user entity.User
+
+	ctxUser := r.Context().Value("user")
+	user, ok := ctxUser.(entity.User)
+
+	if !ok {
+		http.Error(w, "Invalid user type in context", http.StatusInternalServerError)
+		return
+	}
+
 	queryParams := r.URL.Query()
 	id, err := strconv.Atoi(queryParams.Get("id"))
 	if err != nil {
 		internal.JsonResponse("Invalid query param `id`", http.StatusBadRequest, w)
-		return
-	}
-
-	user, err := security.CurrentUser(r)
-	if err != nil {
-		internal.JsonResponse("Forbidden", http.StatusForbidden, w)
 		return
 	}
 

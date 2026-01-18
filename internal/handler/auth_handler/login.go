@@ -38,13 +38,19 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if currentUser.Token == nil {
+	var isTokenValid bool
+
+	if currentUser.Token != nil {
+		isTokenValid, err = security.IsTokenValid(*currentUser.Token)
+	} else {
 		err = security.RefreshToken(&currentUser)
+	}
+
+	if err != nil || !isTokenValid {
 		if err != nil {
 			internal.JsonResponse(err, http.StatusBadRequest, w)
 			return
 		}
-
 		repository.Update(currentUser)
 	}
 

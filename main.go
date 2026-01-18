@@ -6,6 +6,7 @@ import (
 	"go-web/conf"
 	"go-web/internal/handler/auth_handler"
 	"go-web/internal/handler/post_handler"
+	"go-web/internal/middleware"
 	"go-web/pkg/db"
 	"go-web/pkg/helper"
 	"go-web/pkg/router"
@@ -24,8 +25,12 @@ func main() {
 	router.Post("/auth/login", auth_handler.Login)
 
 	router.Prefix("/api/post")
+
 	router.Get("", post_handler.List)
 	router.Get("/show", post_handler.Read)
+
+	router.Use(middleware.Auth)
+
 	router.Post("", post_handler.Create)
 	router.Patch("", post_handler.Update)
 	router.Delete("", post_handler.Delete)
